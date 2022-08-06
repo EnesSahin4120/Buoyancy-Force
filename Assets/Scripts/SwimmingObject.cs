@@ -8,21 +8,21 @@ public class SwimmingObject : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private Rigidbody _rb;
 
-    private float _cubeBottomY
+    private float _objectBottomY
     {
         get
         {
             return _meshRenderer.bounds.min.y;
         }
     }
-    private float _cubeTopY
+    private float _objectTopY
     {
         get
         {
             return _meshRenderer.bounds.max.y;
         }
     }
-    private float _cubeSurfaceArea
+    private float _objectSurfaceArea
     {
         get
         {
@@ -33,14 +33,14 @@ public class SwimmingObject : MonoBehaviour
     {
         get
         {
-            return Mathf.Abs(_cubeBottomY - _waterSettings.WaterPos_Y);
+            return Mathf.Abs(_objectBottomY - _waterSettings.WaterPos_Y);
         }
     }
     private float _ht
     {
         get
         {
-            return Mathf.Abs(_cubeTopY - _waterSettings.WaterPos_Y);
+            return Mathf.Abs(_objectTopY - _waterSettings.WaterPos_Y);
         }
     }
 
@@ -53,20 +53,20 @@ public class SwimmingObject : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        if (_cubeBottomY < _waterSettings.WaterPos_Y)
+        if (_objectBottomY < _waterSettings.WaterPos_Y)
             _rb.AddForce(Vector3.up * UpwardForceMagnitude(),ForceMode.Force);
 
-        if (_cubeTopY < _waterSettings.WaterPos_Y)
+        if (_objectTopY < _waterSettings.WaterPos_Y)
             _rb.AddForce(-Vector3.up * DownwardForceMagnitude(),ForceMode.Force);
     }
 
     private float UpwardForceMagnitude() 
     {
-        return Mathf.Abs(_waterSettings.BuoyancyFactor * _hb * _cubeSurfaceArea);
+        return Mathf.Abs(_waterSettings.BuoyancyFactor * _hb * _objectSurfaceArea);
     }
 
     private float DownwardForceMagnitude()
     {
-        return Mathf.Abs(_waterSettings.BuoyancyFactor * _ht * _cubeSurfaceArea);
+        return Mathf.Abs(_waterSettings.BuoyancyFactor * _ht * _objectSurfaceArea);
     }
 }
